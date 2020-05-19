@@ -1,0 +1,16 @@
+{% extends "orders/layout.html" %}
+
+{% block title %}
+    Index
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <center>
+        <div class="m-5">
+    <h3>Welcome to Pinoccio's Pizza and Subs</h3>
+            </div>
+        <a href="{% url 'register' %}"><button class="btn btn-dark">Get Started</button></a>
+    </center>
+</div>
+{% endblock %}
