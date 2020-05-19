@@ -34,3 +34,13 @@ class SaladsPasta(models.Model):
 
     def __repr__(self):
         return f'Salads/Pasta {self.name} {self.price}'
+
+
+class Transactions(models.Model):
+    pizza = models.ManyToManyField(Pizza, blank=True, related_name='customers')
+    salads_pasta = models.ManyToManyField(SaladsPasta, blank=True, related_name="customers")
+    subs_platters = models.ManyToManyField(SubsPlatters, blank=True, related_name="customers")
+    total_price = models.FloatField()
+
+    def __repr__(self):
+        return f'Pizza={self.pizza}, Salads & Pasta={self.salads_pasta}, Subs & Platters={self.subs_platters}, Expenditure={self.total_price}'
