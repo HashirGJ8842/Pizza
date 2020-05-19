@@ -7,8 +7,13 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+    {% block scripts %}
+    {% endblock scripts %}
     <title>Pizza -- {% block title %}{% endblock title %}</title>
+      <style>
+          {% block style %}
+          {% endblock style %}
+      </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,13 +28,17 @@
             <li class="nav-item active">
             <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
             </li>
+            <li>
+            <a class="nav-link" href="{% url 'shopping_list' %}">Place an order</a>
+            </li>
             {% else %}
+            <div class="navbar-brand">Welcome Guest</div>
             <li class="nav-item active">
             <a class="nav-link" href="{% url 'login_view' %}">Login</a>
-          </li>
-          <li class="nav-item active">
+            </li>
+            <li class="nav-item active">
             <a class="nav-link" href="{% url 'register' %}">Register</a>
-          </li>
+            </li>
             {% endif %}
         </ul>
       </div>

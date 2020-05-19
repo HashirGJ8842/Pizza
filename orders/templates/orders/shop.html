@@ -1,0 +1,99 @@
+{% extends 'orders/layout.html' %}
+
+{% block scripts %}
+<script src="static/orders/index.js">
+
+</script>
+{% endblock scripts %}
+
+{% block style %}
+    td {
+        padding: 2px;
+    }
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+    <h1>Shop Now</h1>
+        <center><h2>Pizza</h2></center>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>Regular</h4>
+            <table style="border: 2px solid black; width: 100%">
+    <tr>
+        <th>Type</th>
+        <th>Size</th>
+        <th>Price</th>
+    </tr>
+    {% for i in pizzas %}
+        {% if i.type == "Regular" %}
+    <tr>
+        {% if i.subtype == "1T" %}
+        <td>1 Topping</td>
+        {% endif %}
+        {% if i.subtype == "2T" %}
+        <td>2 Toppings</td>
+        {% endif %}
+        {% if i.subtype == "3T" %}
+        <td>3 Toppings</td>
+        {% endif %}
+        {% if i.subtype == "SP" %}
+        <td>Special</td>
+        {% endif %}
+        {% if i.subtype == "Cheese" %}
+        <td>Cheese</td>
+        {% endif %}
+        <td>{{ i.size }}</td>
+        <td class="price">{{ i.price }}</td>
+        <td><button class="btn btn-small btn-primary">Add to cart</button></td>
+    </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+        </div>
+        <div class="col-lg-6">
+            <h4>Sicilian</h4>
+    <table style="border: 2px solid black; width: 100%">
+    <tr>
+        <th>Type</th>
+        <th>Size</th>
+        <th>Price</th>
+    </tr>
+    {% for i in pizzas %}
+        {% if i.type == "Sicilian" %}
+    <tr>
+        {% if i.subtype == "1T" %}
+        <td>1 Topping</td>
+        {% endif %}
+        {% if i.subtype == "2T" %}
+        <td>2 Toppings</td>
+        {% endif %}
+        {% if i.subtype == "3T" %}
+        <td>3 Toppings</td>
+        {% endif %}
+        {% if i.subtype == "SP" %}
+        <td>Special</td>
+        {% endif %}
+        {% if i.subtype == "Cheese" %}
+        <td>Cheese</td>
+        {% endif %}
+        <td>{{ i.size }}</td>
+        <td class="price">{{ i.price }}</td>
+        <td><button class="btn btn-small btn-primary">Add to cart</button></td>
+    </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+    </div>
+        <div>
+        <div class="mr-auto">
+        </div>
+            <div id="total_price">
+                0
+            </div>
+    <button class="btn btn-dark mt-4" id="proceed">
+        Proceed
+    </button>
+        </div>
+</div>
+{% endblock content %}

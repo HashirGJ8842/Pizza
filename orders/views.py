@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
 from django.contrib.auth import login, logout, user_logged_in, user_logged_out, authenticate
 from django.contrib.auth.models import User
+from .models import Pizza, SubsPlatters, SaladsPasta, Toppings
 
 
 def logout_view(request):
@@ -49,3 +50,12 @@ def login_view(request):
     else:
         return render(request, 'orders/login.html', context={'type': 'success', 'message': 'Invalid Credentials, please try again', 'username': request.user.username})
 
+
+def shopping_list(request):
+    context = {
+        'pizzas': Pizza.objects.all(),
+        'toppings': Toppings.objects.all(),
+        'salads': SaladsPasta.objects.all(),
+        'subs': SubsPlatters.objects.all()
+    }
+    return render(request, 'orders/shop.html', context=context)
