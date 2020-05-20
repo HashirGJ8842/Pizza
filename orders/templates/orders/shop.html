@@ -45,7 +45,7 @@
         {% endif %}
         <td>{{ i.size }}</td>
         <td class="price">{{ i.price }}</td>
-        <td><button class="btn btn-small btn-primary">Add to cart</button></td>
+        <td><button value="{{ i.id }}" class="list_item btn btn-small btn-primary">Add to cart</button></td>
     </tr>
         {% endif %}
     {% endfor %}
@@ -79,21 +79,27 @@
         {% endif %}
         <td>{{ i.size }}</td>
         <td class="price">{{ i.price }}</td>
-        <td><button class="btn btn-small btn-primary">Add to cart</button></td>
+        <td><button value="{{ i.id }}" class="list_item btn btn-small btn-primary">Add to cart</button></td>
     </tr>
         {% endif %}
     {% endfor %}
     </table>
     </div>
-        <div>
-        <div class="mr-auto">
-        </div>
+</div>
+    <div class="row">
+            <div class="col-6">
+            <h5>Total Price</h5>
             <div id="total_price">
                 0
             </div>
-    <button class="btn btn-dark mt-4" id="proceed">
+            </div>
+            <div class="col-6">
+                <form action="{% url 'shopping_list' %}" method="post">
+                    {% csrf_token %}>
+    <button name="main" id="main" class="btn btn-dark mt-4" type="submit">
         Proceed
     </button>
+                </form>
+            </div>
         </div>
-</div>
 {% endblock content %}

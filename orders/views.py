@@ -56,6 +56,11 @@ def shopping_list(request):
         'pizzas': Pizza.objects.all(),
         'toppings': Toppings.objects.all(),
         'salads': SaladsPasta.objects.all(),
-        'subs': SubsPlatters.objects.all()
+        'subs': SubsPlatters.objects.all(),
+        'username': request.user.username
     }
+    if request.POST.get('main'):
+        x = request.POST['main'].split(',')
+        print(x)
+        return render(request, 'orders/shop.html', context=context)
     return render(request, 'orders/shop.html', context=context)
