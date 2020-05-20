@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
 from django.contrib.auth import login, logout, user_logged_in, user_logged_out, authenticate
 from django.contrib.auth.models import User
-from .models import Pizza, SubsPlatters, SaladsPasta, Toppings
+from .models import Pizza, SubsPlatters, SaladsPasta, Toppings, Transactions
 
 
 def logout_view(request):
@@ -59,8 +59,22 @@ def shopping_list(request):
         'subs': SubsPlatters.objects.all(),
         'username': request.user.username
     }
+    t = Transactions(username=request.user.username)
+    t.save()
+    u = t.id
     if request.POST.get('main'):
         x = request.POST['main'].split(',')
-        print(x)
-        return render(request, 'orders/shop.html', context=context)
+        for i in x:
+            pizza = Pizza.objects.get(pk=int(i))
+            t.pizza.add(pizza)
+        return HttpResponseRedirect('toppings')
     return render(request, 'orders/shop.html', context=context)
+
+
+def toppings(request):
+    pizzas = Transactions.objects.filter(username=request.user.username)
+    context = {
+        'pizzas': pizzas[0].pizza.all(),
+        'username': request.user.username
+    }
+    return render(request, 'orders/toppings.html', context=context)
