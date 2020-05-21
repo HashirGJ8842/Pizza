@@ -1,0 +1,110 @@
+{% extends 'orders/layout.html' %}
+
+{% block content %}
+    <center>
+        <h1>
+            Your Transaction
+        </h1>
+    </center>
+<div class="container">
+    <h3>Pizzas</h3>
+    <table width="100%" border="black solid 1px">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Size
+            </th>
+            <th>
+                Toppings
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+        {% for i in pizzas %}
+        <tr>
+            <td>
+                {{ i.pizza.type }}
+            </td>
+            <td>
+                {{ i.pizza.subtype }}
+            </td>
+            <td>
+                {{ i.pizza.size }}
+            </td>
+            <td>
+                <ul>
+                {% for j in i.order_toppings.all %}
+                    <li>{{ j.topping.name }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>
+                {{ i.pizza.price }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Subs and Platters</h3>
+    <table width="100%" border="black solid 1px">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Size
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+        {% for i in subs %}
+        <tr>
+            <td>
+                {{ i.subs.name }}
+            </td>
+            <td>
+                {{ i.subs.size }}
+            </td>
+            <td>
+                {{ i.subs.price }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Salads and Pastas</h3>
+    <table width="100%" border="black solid 1px">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+        {% for i in salads %}
+        <tr>
+            <td>
+                {{ i.salads.name }}
+            </td>
+            <td>
+                {{ i.salads.price }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <center>
+        <form action="{% url 'final' %}" method="post">
+            {% csrf_token %}
+            <button name="main" type="submit" class="btn btn-dark">
+                Done
+            </button>
+        </form>
+    </center>
+</div>
+{% endblock content %}

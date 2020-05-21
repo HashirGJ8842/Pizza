@@ -96,7 +96,9 @@ def shopping_list(request):
 
 
 def toppings(request):
-    print(request.session['cart'])
+    print(Receipt.objects.get(pk=request.session['cart']['id']).order_pizza.all())
+    print(Receipt.objects.get(pk=request.session['cart']['id']).order_subs.all())
+    print(Receipt.objects.get(pk=request.session['cart']['id']).order_salads.all())
     pizzas = []
     for i in request.session['cart']['pizza']:
         pizzas.append(Pizza.objects.get(pk=i))
@@ -117,5 +119,18 @@ def toppings(request):
             z = FinalPizza.objects.get(pk=dic[int(y[0])])
             x = FinalToppings(topping=Toppings.objects.get(pk=int(y[1])), pizza=z)
             x.save()
-        return HttpResponseRedirect('shop')
+        return HttpResponseRedirect('final')
     return render(request, 'orders/toppings.html', context=context)
+
+
+def final(request):
+    context = {
+        'username': request.user.username,
+        'pizzas': Receipt.objects.get(pk=request.session['cart']['id']).order_pizza.all(),
+        'subs': Receipt.objects.get(pk=request.session['cart']['id']).order_subs.all(),
+        'salads': Receipt.objects.get(pk=request.session['cart']['id']).order_salads.all()
+    }
+    if request.POST.get('main'):
+        del request.session['cart']
+        return HttpResponseRedirect('shop')
+    return render(request, 'orders/final.html', context=context)
