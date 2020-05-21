@@ -1,4 +1,12 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
+
+
+class Receipt(models.Model):
+    username = models.CharField(max_length=64)
+
+    def __repr__(self):
+        return f'Receipt;- {self.id} -- {self.username}'
 
 
 class Toppings(models.Model):
@@ -13,7 +21,6 @@ class Pizza(models.Model):
     subtype = models.CharField(max_length=64)
     size = models.CharField(max_length=1, choices=[('L', 'Large'), ('S', "Small")])
     price = models.FloatField()
-    toppings = models.ManyToManyField(Toppings, blank=True, related_name='pizzas')
 
     def __repr__(self):
         return f'PIZZA, {self.type}, {self.subtype}, {self.size}'
@@ -36,9 +43,29 @@ class SaladsPasta(models.Model):
         return f'Salads/Pasta {self.name} {self.price}'
 
 
-class Transactions(models.Model):
-    pizza = models.ManyToManyField(Pizza, blank=True, related_name='customers')
-    salads_pasta = models.ManyToManyField(SaladsPasta, blank=True, related_name="customers")
-    subs_platters = models.ManyToManyField(SubsPlatters, blank=True, related_name="customers")
-    username = models.CharField(max_length=64, default='Guest')
-    total_price = models.FloatField(default=0)
+class FinalSalads(models.Model):
+    salads = models.ForeignKey(SaladsPasta, related_name='order')
+    user = models.ForeignKey(Receipt, blank=True)
+
+    def __repr__(self):
+        return f'Order Salads:- {self.salads.name}'
+
+
+class FinalSubs(models.Model):
+    subs = ArrayField(models.ForeignKey(SubsPlatters, related_name='order'))
+    user = models.ForeignKey(Receipt, blank=True)
+
+    def __repr__(self):
+        return f'Order Subs:- {self.subs.name}'
+
+
+class FinalPizza(models.Model):
+    pizza = models.ForeignKey(Pizza, related_name='order')
+    topping = ArrayField(models.ForeignKey(Toppings, related_name='order'), blank=True)
+    user = models.ForeignKey(Receipt, blank=True)
+
+    def __repr__(self):
+        return f"Order Pizza:- {self.pizza.type} {self.topping.name}"
+
+
+
