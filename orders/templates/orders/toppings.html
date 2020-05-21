@@ -1,5 +1,11 @@
 {% extends 'orders/layout.html' %}
 
+{% block scripts %}
+<script src="static/orders/toppings.js">
+
+</script>
+{% endblock scripts %}
+
 {% block content %}
 <div class="container">
     <h2>Add Toppings of your choice</h2>
@@ -11,9 +17,12 @@
         <div class="row">
         <li class="col-6">{{ i.type }} -- {{ i.subtype }} -- {{ i.size }}</li>
             <select class="col-6 form-control">
-                {% for i in toppings %}
-                <option>
-                    {{ i.name }}
+                <option value="{{ i.id }}||None">
+                    None
+                </option>
+                {% for j in toppings %}
+                <option value="{{ i.id }}||{{ j.id }}" id="{{ j.id }}">
+                    {{ j.name }}
                 </option>
                 {% endfor %}
             </select>
@@ -23,16 +32,22 @@
         <div class="row">
         <li class="col-6">{{ i.type }} -- {{ i.subtype }} -- {{ i.size }}</li>
             <select class="col-3 form-control">
-                {% for i in toppings %}
-                <option>
-                    {{ i.name }}
+                <option value="{{ i.id }}||None">
+                    None
+                </option>
+                {% for j in toppings %}
+                <option value="{{ i.id }}||{{ j.id }}" id="{{ j.id }}">
+                    {{ j.name }}
                 </option>
                 {% endfor %}
             </select>
             <select class="col-3 form-control">
-                {% for i in toppings %}
-                <option>
-                    {{ i.name }}
+                <option value="{{ i.id }}||None">
+                    None
+                </option>
+                {% for j in toppings %}
+                <option value="{{ i.id }}||{{ j.id }}" id="{{ j.id }}">
+                    {{ j.name }}
                 </option>
                 {% endfor %}
             </select>
@@ -42,23 +57,32 @@
         <div class="row">
         <li class="col-6">{{ i.type }} -- {{ i.subtype }} -- {{ i.size }}</li>
             <select class="col-2 form-control">
-                {% for i in toppings %}
-                <option>
-                    {{ i.name }}
+                <option value="{{ i.id }}||None">
+                    None
+                </option>
+                {% for j in toppings %}
+                <option value="{{ i.id }}||{{ j.id }}" id="{{ j.id }}">
+                    {{ j.name }}
                 </option>
                 {% endfor %}
             </select>
             <select class="col-2 form-control">
-                {% for i in toppings %}
-                <option>
-                    {{ i.name }}
+                <option value="{{ i.id }}||None">
+                    None
+                </option>
+                {% for j in toppings %}
+                <option value="{{ i.id }}||{{ j.id }}" id="{{ j.id }}">
+                    {{ j.name }}
                 </option>
                 {% endfor %}
             </select>
             <select class="col-2 form-control">
-                {% for i in toppings %}
-                <option>
-                    {{ i.name }}
+                <option value="{{ i.id }}||None">
+                    None
+                </option>
+                {% for j in toppings %}
+                <option value="{{ i.id }}||{{ j.id }}" id="{{ j.id }}">
+                    {{ j.name }}
                 </option>
                 {% endfor %}
             </select>
@@ -67,5 +91,13 @@
         {% endif %}
         {% endfor %}
     </ul>
+    <center>
+        <form action="{% url 'toppings' %}" method="post">
+            {% csrf_token %}
+        <button class="btn btn-dark" id="main" name="main" type="submit">
+            Proceed
+        </button>
+            </form>
+    </center>
 </div>
 {% endblock content %}

@@ -74,7 +74,18 @@ def shopping_list(request):
 def toppings(request):
     pizzas = Transactions.objects.filter(username=request.user.username)
     context = {
+        'toppings': Toppings.objects.all(),
         'pizzas': pizzas[0].pizza.all(),
         'username': request.user.username
     }
+    if request.POST.get('main'):
+        x = request.POST['main'].split(',')
+        for i in x:
+            y = i.split('||')
+            t = pizzas[0].pizza.get(pk=y[0])
+            print(t)
+            topping = Toppings.objects.get(pk=y[1])
+            print(topping)
+            t.toppings.add(topping)
+        return HttpResponseRedirect('shop')
     return render(request, 'orders/toppings.html', context=context)
