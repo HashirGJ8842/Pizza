@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
 from django.contrib.auth import login, logout, user_logged_in, user_logged_out, authenticate
 from django.contrib.auth.models import User
-from .models import Pizza, SubsPlatters, SaladsPasta, Toppings, Transactions
+from .models import Pizza, SubsPlatters, SaladsPasta, Toppings, FinalPizza, FinalSalads, FinalSubs, FinalToppings, Receipt
 
 
 def logout_view(request):
@@ -52,6 +52,14 @@ def login_view(request):
 
 
 def shopping_list(request):
+    if not request.session.get('cart'):
+        request.session['cart'] = {}
+        t = Receipt(username=request.user.username)
+        t.save()
+        request.session['cart']['username'] = request.user.username
+        request.session['cart']['id'] = t.id
+        request.session['cart']['op'] = "Hashir"
+        request.session['cart']['pizza'] = []
     context = {
         'pizzas': Pizza.objects.all(),
         'toppings': Toppings.objects.all(),
@@ -59,33 +67,41 @@ def shopping_list(request):
         'subs': SubsPlatters.objects.all(),
         'username': request.user.username
     }
-    t = Transactions(username=request.user.username)
-    t.save()
-    u = t.id
+    pizza_list = []
     if request.POST.get('main'):
         x = request.POST['main'].split(',')
         for i in x:
             pizza = Pizza.objects.get(pk=int(i))
-            t.pizza.add(pizza)
+            pizza_list.append(pizza.id)
+
+        request.session['cart']['pizza'] = pizza_list
+        print(request.session['cart']['pizza'])
         return HttpResponseRedirect('toppings')
     return render(request, 'orders/shop.html', context=context)
 
 
 def toppings(request):
-    pizzas = Transactions.objects.filter(username=request.user.username)
+    print(request.session['cart'])
+    pizzas = []
+    for i in request.session['cart']['pizza']:
+        pizzas.append(Pizza.objects.get(pk=i))
     context = {
         'toppings': Toppings.objects.all(),
-        'pizzas': pizzas[0].pizza.all(),
+        'pizzas': pizzas,
         'username': request.user.username
     }
+    dic = {}
     if request.POST.get('main'):
+        for i in pizzas:
+            t = FinalPizza(pizza=i)
+            t.save()
+            t.user.add(Receipt.objects.get(pk=request.session['cart']['id']))
+            dic[i.id] = t.id
         x = request.POST['main'].split(',')
         for i in x:
             y = i.split('||')
-            t = pizzas[0].pizza.get(pk=y[0])
-            print(t)
-            topping = Toppings.objects.get(pk=y[1])
-            print(topping)
-            t.toppings.add(topping)
+            z = FinalPizza.objects.get(pk=dic[int(y[0])])
+            x = FinalToppings(topping=Toppings.objects.get(pk=int(y[1])), pizza=z)
+            x.save()
         return HttpResponseRedirect('shop')
     return render(request, 'orders/toppings.html', context=context)

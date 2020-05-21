@@ -44,28 +44,29 @@ class SaladsPasta(models.Model):
 
 
 class FinalSalads(models.Model):
-    salads = models.ForeignKey(SaladsPasta, related_name='order')
-    user = models.ForeignKey(Receipt, blank=True)
+    salads = models.ForeignKey(SaladsPasta, related_name='order', on_delete=models.CASCADE)
+    user = models.ForeignKey(Receipt, blank=True, on_delete=models.CASCADE)
 
     def __repr__(self):
         return f'Order Salads:- {self.salads.name}'
 
 
 class FinalSubs(models.Model):
-    subs = ArrayField(models.ForeignKey(SubsPlatters, related_name='order'))
-    user = models.ForeignKey(Receipt, blank=True)
+    subs = models.ForeignKey(SubsPlatters, related_name='order', on_delete=models.CASCADE)
+    user = models.ForeignKey(Receipt, blank=True, on_delete=models.CASCADE)
 
     def __repr__(self):
         return f'Order Subs:- {self.subs.name}'
 
 
 class FinalPizza(models.Model):
-    pizza = models.ForeignKey(Pizza, related_name='order')
-    topping = ArrayField(models.ForeignKey(Toppings, related_name='order'), blank=True)
-    user = models.ForeignKey(Receipt, blank=True)
+    pizza = models.ForeignKey(Pizza, related_name='order', on_delete=models.CASCADE)
+    user = models.ForeignKey(Receipt, blank=True, on_delete=models.CASCADE)
 
     def __repr__(self):
         return f"Order Pizza:- {self.pizza.type} {self.topping.name}"
 
 
-
+class FinalToppings(models.Model):
+    topping = models.ForeignKey(Toppings, related_name='order', on_delete=models.CASCADE)
+    pizza = models.ForeignKey(FinalPizza, on_delete=models.CASCADE)
