@@ -68,5 +68,5 @@ class FinalPizza(models.Model):
 
 
 class FinalToppings(models.Model):
-    topping = models.ForeignKey(Toppings, related_name='order', on_delete=models.CASCADE)
+    topping = models.ForeignKey(Toppings, related_name='toppings', on_delete=models.CASCADE)
     pizza = models.ForeignKey(FinalPizza, on_delete=models.CASCADE)

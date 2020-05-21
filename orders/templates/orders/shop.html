@@ -87,6 +87,42 @@
     </div>
 </div>
     <div class="row">
+        <div class="col-lg-6">
+            <h4>Salads and Pasta</h4>
+    <table style="border: 2px solid black; width: 100%">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+    {% for i in salads %}
+    <tr>
+        <td>{{ i.name }}</td>
+        <td class="price">{{ i.price }}</td>
+        <td><button value="P||{{ i.id }}" class="list_item btn btn-small btn-primary">Add to cart</button></td>
+    </tr>
+    {% endfor %}
+    </table>
+        </div>
+        <div class="col-lg-6">
+            <h4>Subs and Platters</h4>
+    <table style="border: 2px solid black; width: 100%">
+    <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Price</th>
+    </tr>
+    {% for i in subs %}
+    <tr>
+        <td>{{ i.name }}</td>
+        <td>{{ i.size }}</td>
+        <td class="price">{{ i.price }}</td>
+        <td><button value="S||{{ i.id }}" class="list_item btn btn-small btn-primary">Add to cart</button></td>
+    </tr>
+    {% endfor %}
+    </table>
+    </div>
+    </div>
+    <div class="row">
             <div class="col-6">
             <h5>Total Price</h5>
             <div id="total_price">
@@ -102,4 +138,5 @@
                 </form>
             </div>
         </div>
+</div>
 {% endblock content %}

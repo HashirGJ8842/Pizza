@@ -52,6 +52,8 @@ def login_view(request):
 
 
 def shopping_list(request):
+    if request.session.get('cart'):
+        del request.session['cart']
     if not request.session.get('cart'):
         request.session['cart'] = {}
         t = Receipt(username=request.user.username)
@@ -60,6 +62,8 @@ def shopping_list(request):
         request.session['cart']['id'] = t.id
         request.session['cart']['op'] = "Hashir"
         request.session['cart']['pizza'] = []
+        request.session['cart']['subs'] = []
+        request.session['cart']['salads'] = []
     context = {
         'pizzas': Pizza.objects.all(),
         'toppings': Toppings.objects.all(),
@@ -71,8 +75,19 @@ def shopping_list(request):
     if request.POST.get('main'):
         x = request.POST['main'].split(',')
         for i in x:
-            pizza = Pizza.objects.get(pk=int(i))
-            pizza_list.append(pizza.id)
+            try:
+                pizza = Pizza.objects.get(pk=int(i))
+                pizza_list.append(pizza.id)
+            except ValueError:
+                u = i.split('||')
+                if u[0] == 'S':
+                    t = FinalSubs(subs=SubsPlatters.objects.get(pk=int(u[1])), user=Receipt.objects.get(pk=request.session['cart']['id']))
+                    t.save()
+                    request.session['cart']['subs'].append(int(u[1]))
+                if u[0] == 'P':
+                    t = FinalSalads(salads=SaladsPasta.objects.get(pk=int(u[1])), user=Receipt.objects.get(pk=request.session['cart']['id']))
+                    t.save()
+                    request.session['cart']['salads'].append(int(u[1]))
 
         request.session['cart']['pizza'] = pizza_list
         print(request.session['cart']['pizza'])
@@ -93,9 +108,8 @@ def toppings(request):
     dic = {}
     if request.POST.get('main'):
         for i in pizzas:
-            t = FinalPizza(pizza=i)
+            t = FinalPizza(pizza=i, user=Receipt.objects.get(pk=request.session['cart']['id']))
             t.save()
-            t.user.add(Receipt.objects.get(pk=request.session['cart']['id']))
             dic[i.id] = t.id
         x = request.POST['main'].split(',')
         for i in x:
