@@ -11,6 +11,7 @@ def logout_view(request):
 
 
 def index(request):
+    del request.session['cart']
     return render(request, 'orders/index.html', context={'username': request.user.username})
 
 
@@ -117,8 +118,8 @@ def shopping_list(request):
 def toppings(request):
     pizzas = []
     param = 0
-    for i in request.session['cart']['pizza']:
-        j = Pizza.objects.get(pk=i)
+    for j in Receipt.objects.get(pk=request.session['cart']['id']).order_pizza.all():
+        j = j.pizza
         pizzas.append(j)
         if j.subtype == "1T" or j.subtype == "2T" or j.subtype == "3T":
             param += 1
