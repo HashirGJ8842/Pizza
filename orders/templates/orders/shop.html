@@ -27,7 +27,29 @@
     </tr>
     {% for i in pizzas %}
         {% if i.type == "Regular" %}
-    <tr>
+    {% if i in not_pizza %}
+    <tr style="text-decoration: line-through">
+        {% if i.subtype == "1T" %}
+        <td>1 Topping</td>
+        {% endif %}
+        {% if i.subtype == "2T" %}
+        <td>2 Toppings</td>
+        {% endif %}
+        {% if i.subtype == "3T" %}
+        <td>3 Toppings</td>
+        {% endif %}
+        {% if i.subtype == "SP" %}
+        <td>Special</td>
+        {% endif %}
+        {% if i.subtype == "Cheese" %}
+        <td>Cheese</td>
+        {% endif %}
+        <td>{{ i.size }}</td>
+        <td class="price">{{ i.price }}</td>
+        <td><button value="{{ i.id }}" class="list_item btn btn-small btn-primary" disabled="true">Add to cart</button></td>
+    </tr>
+                {% else %}
+                <tr>
         {% if i.subtype == "1T" %}
         <td>1 Topping</td>
         {% endif %}
@@ -47,6 +69,7 @@
         <td class="price">{{ i.price }}</td>
         <td><button value="{{ i.id }}" class="list_item btn btn-small btn-primary">Add to cart</button></td>
     </tr>
+                {% endif %}
         {% endif %}
     {% endfor %}
     </table>
@@ -61,7 +84,29 @@
     </tr>
     {% for i in pizzas %}
         {% if i.type == "Sicilian" %}
-    <tr>
+        {% if i in not_pizza %}
+    <tr style="text-decoration: line-through">
+        {% if i.subtype == "1T" %}
+        <td>1 Topping</td>
+        {% endif %}
+        {% if i.subtype == "2T" %}
+        <td>2 Toppings</td>
+        {% endif %}
+        {% if i.subtype == "3T" %}
+        <td>3 Toppings</td>
+        {% endif %}
+        {% if i.subtype == "SP" %}
+        <td>Special</td>
+        {% endif %}
+        {% if i.subtype == "Cheese" %}
+        <td>Cheese</td>
+        {% endif %}
+        <td>{{ i.size }}</td>
+        <td class="price">{{ i.price }}</td>
+        <td><button value="{{ i.id }}" class="list_item btn btn-small btn-primary" disabled="true">Add to cart</button></td>
+    </tr>
+                {% else %}
+                <tr>
         {% if i.subtype == "1T" %}
         <td>1 Topping</td>
         {% endif %}
@@ -81,6 +126,7 @@
         <td class="price">{{ i.price }}</td>
         <td><button value="{{ i.id }}" class="list_item btn btn-small btn-primary">Add to cart</button></td>
     </tr>
+                {% endif %}
         {% endif %}
     {% endfor %}
     </table>
@@ -95,11 +141,19 @@
         <th>Price</th>
     </tr>
     {% for i in salads %}
-    <tr>
+        {% if i in not_salads %}
+    <tr style="text-decoration: line-through">
+        <td>{{ i.name }}</td>
+        <td class="price">{{ i.price }}</td>
+        <td><button value="P||{{ i.id }}" class="list_item btn btn-small btn-primary" disabled="true">Add to cart</button></td>
+    </tr>
+        {% else %}
+        <tr>
         <td>{{ i.name }}</td>
         <td class="price">{{ i.price }}</td>
         <td><button value="P||{{ i.id }}" class="list_item btn btn-small btn-primary">Add to cart</button></td>
     </tr>
+        {% endif %}
     {% endfor %}
     </table>
         </div>
@@ -112,12 +166,21 @@
         <th>Price</th>
     </tr>
     {% for i in subs %}
-    <tr>
+        {% if i in not_subs %}
+        <tr style="text-decoration: line-through">
+        <td>{{ i.name }}</td>
+        <td>{{ i.size }}</td>
+        <td class="price">{{ i.price }}</td>
+        <td><button value="S||{{ i.id }}" class="list_item btn btn-small btn-primary" disabled="true">Add to cart</button></td>
+    </tr>
+        {% else %}
+        <tr>
         <td>{{ i.name }}</td>
         <td>{{ i.size }}</td>
         <td class="price">{{ i.price }}</td>
         <td><button value="S||{{ i.id }}" class="list_item btn btn-small btn-primary">Add to cart</button></td>
     </tr>
+        {% endif %}
     {% endfor %}
     </table>
     </div>

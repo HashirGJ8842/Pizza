@@ -53,8 +53,22 @@ def login_view(request):
 
 def shopping_list(request):
     if request.session.get('cart'):
-        del request.session['cart']
+        not_pizza = []
+        not_subs = []
+        not_salads = []
+        final_pizzas = Receipt.objects.get(pk=request.session['cart']['id']).order_pizza.all()
+        final_subs = Receipt.objects.get(pk=request.session['cart']['id']).order_subs.all()
+        final_salads = Receipt.objects.get(pk=request.session['cart']['id']).order_salads.all()
+        for i in final_pizzas:
+            not_pizza.append(i.pizza)
+        for i in final_subs:
+            not_subs.append(i.subs)
+        for i in final_salads:
+            not_salads.append(i.salads)
     if not request.session.get('cart'):
+        not_pizza = []
+        not_subs = []
+        not_salads = []
         request.session['cart'] = {}
         t = Receipt(username=request.user.username)
         t.save()
@@ -65,6 +79,9 @@ def shopping_list(request):
         request.session['cart']['subs'] = []
         request.session['cart']['salads'] = []
     context = {
+        'not_pizza': not_pizza,
+        'not_subs': not_subs,
+        'not_salads': not_salads,
         'pizzas': Pizza.objects.all(),
         'toppings': Toppings.objects.all(),
         'salads': SaladsPasta.objects.all(),
