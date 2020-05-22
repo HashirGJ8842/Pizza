@@ -11,7 +11,6 @@ def logout_view(request):
 
 
 def index(request):
-    del request.session['cart']
     return render(request, 'orders/index.html', context={'username': request.user.username})
 
 
