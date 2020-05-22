@@ -124,11 +124,22 @@ def toppings(request):
 
 
 def final(request):
+    pizzas = Receipt.objects.get(pk=request.session['cart']['id']).order_pizza.all()
+    subs = Receipt.objects.get(pk=request.session['cart']['id']).order_subs.all()
+    salads = Receipt.objects.get(pk=request.session['cart']['id']).order_salads.all()
+    total = 0
+    for i in pizzas:
+        total += i.pizza.price
+    for i in subs:
+        total += i.subs.price
+    for i in salads:
+        total += i.salads.price
     context = {
         'username': request.user.username,
-        'pizzas': Receipt.objects.get(pk=request.session['cart']['id']).order_pizza.all(),
-        'subs': Receipt.objects.get(pk=request.session['cart']['id']).order_subs.all(),
-        'salads': Receipt.objects.get(pk=request.session['cart']['id']).order_salads.all()
+        'pizzas': pizzas,
+        'subs': subs,
+        'salads': salads,
+        'total': total
     }
     if request.POST.get('main'):
         del request.session['cart']
