@@ -78,6 +78,8 @@ def shopping_list(request):
             try:
                 pizza = Pizza.objects.get(pk=int(i))
                 pizza_list.append(pizza.id)
+                t = FinalPizza(pizza=pizza, user=Receipt.objects.get(pk=request.session['cart']['id']))
+                t.save()
             except ValueError:
                 u = i.split('||')
                 if u[0] == 'S':
@@ -96,23 +98,26 @@ def shopping_list(request):
 
 
 def toppings(request):
-    print(Receipt.objects.get(pk=request.session['cart']['id']).order_pizza.all())
-    print(Receipt.objects.get(pk=request.session['cart']['id']).order_subs.all())
-    print(Receipt.objects.get(pk=request.session['cart']['id']).order_salads.all())
     pizzas = []
+    param = 0
     for i in request.session['cart']['pizza']:
-        pizzas.append(Pizza.objects.get(pk=i))
+        j = Pizza.objects.get(pk=i)
+        pizzas.append(j)
+        if j.subtype == "1T" or j.subtype == "2T" or j.subtype == "3T":
+            param += 1
+    if param == 0:
+        return HttpResponseRedirect('final')
     context = {
         'toppings': Toppings.objects.all(),
         'pizzas': pizzas,
         'username': request.user.username
     }
     dic = {}
+    final_pizzas = Receipt.objects.get(pk=request.session['cart']['id']).order_pizza
     if request.POST.get('main'):
         for i in pizzas:
-            t = FinalPizza(pizza=i, user=Receipt.objects.get(pk=request.session['cart']['id']))
-            t.save()
-            dic[i.id] = t.id
+            o = final_pizzas.get(pizza=i)
+            dic[i.id] = o.id
         x = request.POST['main'].split(',')
         for i in x:
             y = i.split('||')
@@ -143,5 +148,5 @@ def final(request):
     }
     if request.POST.get('main'):
         del request.session['cart']
-        return HttpResponseRedirect('shop')
+        return HttpResponseRedirect(reverse('shop'))
     return render(request, 'orders/final.html', context=context)
