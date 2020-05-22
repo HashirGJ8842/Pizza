@@ -11,6 +11,8 @@ def logout_view(request):
 
 
 def index(request):
+    if request.session.get('cart'):
+        del request.session['cart']
     return render(request, 'orders/index.html', context={'username': request.user.username})
 
 
@@ -146,6 +148,9 @@ def toppings(request):
 
 
 def final(request):
+    if request.POST.get('main'):
+        del request.session['cart']
+        return HttpResponseRedirect(reverse('shop'))
     pizzas = Receipt.objects.get(pk=request.session['cart']['id']).order_pizza.all()
     subs = Receipt.objects.get(pk=request.session['cart']['id']).order_subs.all()
     salads = Receipt.objects.get(pk=request.session['cart']['id']).order_salads.all()
@@ -163,7 +168,4 @@ def final(request):
         'salads': salads,
         'total': total
     }
-    if request.POST.get('main'):
-        del request.session['cart']
-        return HttpResponseRedirect(reverse('shop'))
     return render(request, 'orders/final.html', context=context)
