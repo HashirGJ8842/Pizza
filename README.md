@@ -1,3 +1,2 @@
-# Project 3
+# Pinnocio's Pizza and Subs
 
-Web Programming with Python and JavaScript
