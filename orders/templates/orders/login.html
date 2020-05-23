@@ -1,6 +1,7 @@
 {% extends "orders/layout.html" %}
 
 {% block content %}
+<div class="container">
     <form action="{% url 'login_view' %}" method="post">
         {% csrf_token %}
         <div class="form-group row">
@@ -8,12 +9,14 @@
 
             </div>
             <div class="col-lg-8">
+                <h3 class="margin-bottom">Welcome Back!</h3>
                 <label>Username</label>
                 <input type="text" class="form-control form-control-lg" name="username">
                 <label>Password</label>
                 <input type="password" class="form-control form-control-lg" name="password">
-                <button type="submit" class="btn btn-dark">Submit</button>
+                <button type="submit" class="btn btn-dark mt-3">Submit</button>
             </div>
         </div>
     </form>
+</div>
 {% endblock content %}

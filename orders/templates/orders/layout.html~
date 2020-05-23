@@ -11,40 +11,33 @@
     {% endblock scripts %}
     <title>{% block title %}{% endblock title %}</title>
       <style>
-        body {
-                  background-image: url("static/orders/pizza.jpg");
-                  background-repeat: no-repeat, repeat;
-                  background-color: #cccccc;
-                  background-size: cover;
-            }
           {% block style %}
           {% endblock style %}
       </style>
   </head>
-  <body  style="font-family: Times New Roman; color: white">
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent">
-      <a class="navbar-brand" href="{% url 'index' %}" style="font-family: Times New Roman">Pinocchio's Pizza and Subs</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Pinocchio's Pizza and Subs</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <div class="mr-auto">
 
         </div>
         <ul class="navbar-nav">
             {% if username %}
+            <li class="nav-item">Welcome {{ username }}</li>
             <li class="nav-item active">
-            <a class="nav-link" href="{% url 'logout_view' %}" style="font-family: Times New Roman">Logout</a>
+            <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
             </li>
             <li class="nav-item active">
-            <a class="nav-link" href="{% url 'shopping_list' %}" style="font-family: Times New Roman">Place an order</a>
+            <a class="nav-link" href="{% url 'shopping_list' %}">Place an order</a>
             </li>
             {% else %}
+            <li class="nav-item">Welcome Guest</li>
             <li class="nav-item active">
-            <a class="nav-link" href="{% url 'login_view' %}" style="font-family: Times New Roman">Login</a>
-            </li>
+            <a class="nav-link" href="{% url 'login_view' %}">Login</a>
             <li class="nav-item active">
-            <a class="nav-link" href="{% url 'register' %}" style="font-family: Times New Roman">Register</a>
+            <li class="nav-item active">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
             </li>
             {% endif %}
 	</ul>
