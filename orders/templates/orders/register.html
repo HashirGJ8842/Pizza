@@ -1,22 +1,25 @@
 {% extends "orders/layout.html" %}
 
 {% block content %}
+<div class="container">
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <div class="form-group row">
+
             <div class="col-2">
 
             </div>
             <div class="col-lg-8">
+                <h3>Join Us</h3>
                 <label>Username</label>
                 <input type="text" class="form-control form-control-lg" name="username">
                 <div class="row">
                     <div class="col-6">
-                        <label>Firstname</label>
+                        <label>First Name</label>
                         <input type="text" class="form-control form-control-lg" name="first_name">
                     </div>
                     <div class="col-6">
-                        <label>Lastname</label>
+                        <label>Last Name</label>
                         <input type="text" class="form-control form-control-lg" name="last_name">
                     </div>
                 </div>
@@ -26,8 +29,9 @@
                 <input type="password" class="form-control form-control-lg" name="password">
                 <label>Confirm Password</label>
                 <input type="password" class="form-control form-control-lg" name="confirm_password">
-                <button type="submit" class="btn btn-dark">Submit</button>
+                <button type="submit" class="btn btn-dark mt-3">Submit</button>
             </div>
         </div>
     </form>
+</div>
 {% endblock content %}

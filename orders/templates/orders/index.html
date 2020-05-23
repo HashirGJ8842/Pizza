@@ -5,17 +5,21 @@
 {% endblock title %}
 
 {% block content %}
-<div class="container">
+<div style="color: white; margin-top: 12.5%">
     <center>
-        <img src="static/orders/pizza.jpg" width="100%"/>
+        {% if username %}
+            <h3 class="navbar-brand ml-3" style="font-family: Times New Roman">Hi {{ username }}</h3>
+            {% else %}
+            <h3 class="navbar-brand ml-3" style="font-family: Times New Roman">Hi Guest</h3>
+            {% endif %}
+    <h1 style="font-family: Times New Roman">Welcome to Pinoccio's Pizza and Subs</h1>
         <div class="m-5">
-    <h3>Welcome to Pinoccio's Pizza and Subs</h3>
-            </div>
         {% if username %}
         <a href="{% url 'shopping_list' %}"><button class="btn btn-dark">Get Started</button></a>
         {% else %}
         <a href="{% url 'register' %}"><button class="btn btn-dark">Get Started</button></a>
         {% endif %}
+            </div>
     </center>
 </div>
 {% endblock %}

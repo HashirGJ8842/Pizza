@@ -17,17 +17,18 @@
 {% endblock style %}
 
 {% block content %}
-<div class="container">
-    <h1>Shop Now</h1>
-        <center><h2>Pizza</h2></center>
+<div class="container" style="font-family: Times New Roman">
+    <h1 style="color: white">Shop Now</h1>
+        <center style="color: white"><h2>Pizza</h2></center>
     <div class="row">
         <div class="col-lg-6">
-            <h4>Regular</h4>
-            <table style="border: 2px solid black; width: 100%">
+            <h4 style="color: white">Regular</h4>
+            <table style="border: 2px solid black; width: 100%; background-color: #ff9494;">
     <tr>
         <th>Type</th>
         <th>Size</th>
         <th>Price</th>
+        <th></th>
     </tr>
     {% for i in pizzas %}
         {% if i.type == "Regular" %}
@@ -79,12 +80,13 @@
     </table>
         </div>
         <div class="col-lg-6">
-            <h4>Sicilian</h4>
-    <table style="border: 2px solid black; width: 100%">
+            <h4 style="color: white">Sicilian</h4>
+    <table style="border: 2px solid black; width: 100%; background-color: #ff9494;">
     <tr>
         <th>Type</th>
         <th>Size</th>
         <th>Price</th>
+        <th></th>
     </tr>
     {% for i in pizzas %}
         {% if i.type == "Sicilian" %}
@@ -138,11 +140,12 @@
 </div>
     <div class="row">
         <div class="col-lg-6">
-            <h4>Salads and Pasta</h4>
-    <table style="border: 2px solid black; width: 100%">
+            <h4 style="color: white">Salads and Pasta</h4>
+    <table style="border: 2px solid black; width: 100%; background-color: #ff9494;">
     <tr>
         <th>Name</th>
         <th>Price</th>
+        <th></th>
     </tr>
     {% for i in salads %}
         {% if i in not_salads %}
@@ -162,12 +165,13 @@
     </table>
         </div>
         <div class="col-lg-6">
-            <h4>Subs and Platters</h4>
-    <table style="border: 2px solid black; width: 100%">
+            <h4 style="color: white">Subs and Platters</h4>
+    <table style="border: 2px solid black; width: 100%; background-color: #ff9494;">
     <tr>
         <th>Name</th>
         <th>Size</th>
         <th>Price</th>
+        <th></th>
     </tr>
     {% for i in subs %}
         {% if i in not_subs %}

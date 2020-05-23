@@ -167,6 +167,5 @@ def final(request):
         'subs': subs,
         'salads': salads,
         'total': total
-        }
-
+    }
     return render(request, 'orders/final.html', context=context)

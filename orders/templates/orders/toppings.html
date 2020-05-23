@@ -19,8 +19,8 @@
         {% else %}
         {% if i.subtype == "1T" %}
         <div class="row">
-        <li class="col-6">{{ i.type }} -- {{ i.subtype }} -- {{ i.size }}</li>
-            <select class="col-6 form-control">
+        <li class="col-12 col-lg-6">{{ i.type }} -- 1 Topping -- {{ i.size }}</li>
+            <select class="col-lg-6 col-12 form-control">
                 <option value="{{ i.id }}||None">
                     None
                 </option>
@@ -34,8 +34,8 @@
         {% endif %}
         {% if i.subtype == "2T" %}
         <div class="row">
-        <li class="col-6">{{ i.type }} -- {{ i.subtype }} -- {{ i.size }}</li>
-            <select class="col-3 form-control">
+        <li class="col-12 col-lg-6">{{ i.type }} -- 2 Toppings -- {{ i.size }}</li>
+            <select class="col-lg-3 col-6 form-control">
                 <option value="{{ i.id }}||None">
                     None
                 </option>
@@ -45,7 +45,7 @@
                 </option>
                 {% endfor %}
             </select>
-            <select class="col-3 form-control">
+            <select class="col-lg-3 col-6 form-control">
                 <option value="{{ i.id }}||None">
                     None
                 </option>
@@ -59,8 +59,8 @@
         {% endif %}
         {% if i.subtype == "3T" %}
         <div class="row">
-        <li class="col-6">{{ i.type }} -- {{ i.subtype }} -- {{ i.size }}</li>
-            <select class="col-2 form-control">
+        <li class="col-lg-6 col-12">{{ i.type }} -- 3 Toppings -- {{ i.size }}</li>
+            <select class="col-lg-2 col-4 form-control">
                 <option value="{{ i.id }}||None">
                     None
                 </option>
@@ -70,7 +70,7 @@
                 </option>
                 {% endfor %}
             </select>
-            <select class="col-2 form-control">
+            <select class="col-lg-2 col-4 form-control">
                 <option value="{{ i.id }}||None">
                     None
                 </option>
@@ -80,7 +80,7 @@
                 </option>
                 {% endfor %}
             </select>
-            <select class="col-2 form-control">
+            <select class="col-lg-2 col-4 form-control">
                 <option value="{{ i.id }}||None">
                     None
                 </option>
