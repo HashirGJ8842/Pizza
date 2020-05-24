@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
         var shopping_list = []
        document.querySelectorAll('button').forEach(button => {
-            if(button.name == "main")
+            if(button.name == "navbar")
+            {
+
+            }
+            else if(button.name == "main")
             {
 
             }
