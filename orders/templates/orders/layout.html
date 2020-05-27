@@ -11,12 +11,24 @@
     {% endblock scripts %}
     <title>{% block title %}{% endblock title %}</title>
       <style>
-        body {
+      @media (min-width: 501px)
+      {
+           body {
                   background-image: url("static/orders/pizza.jpg");
                   background-repeat: no-repeat, repeat;
                   background-color: #cccccc;
                   background-size: cover;
             }
+      }
+      @media (max-width: 500px)
+      {
+           body {
+                  background-image: url("static/orders/pizza_1.jpg");
+                  background-repeat: no-repeat, repeat;
+                  background-color: #cccccc;
+                  background-size: cover;
+            }
+      }
           {% block style %}
           {% endblock style %}
       </style>
